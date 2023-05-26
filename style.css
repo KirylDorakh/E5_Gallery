@@ -1,0 +1,58 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    grid-template-rows: 80% 20%;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    font-size: 40px;
+    width: 5%
+}
+
+.img{
+    height: 500px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.img .footimg{
+    height: 100%;
+    width: auto;
+}
+
+.img .footimg img{
+    height: 100%;
+    width: auto;
+}
+
+.gallery{
+    background-color: rgba(128, 128, 128, 0.69);
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery .footimg {
+    height: 100%;
+    width: auto;
+    margin: 0 10px;
+}
+
+.gallery .footimg img{
+    height: 100%;
+    width: auto;
+}
