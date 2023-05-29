@@ -7,22 +7,34 @@ const next = document.querySelector('.next')
 const prev = document.querySelector('.prev')
 const container = document.querySelector('.img')
 
+let currentIndex = 0
+
 // кнопка вперед
 let nextImg = () => {
-
+    if (currentIndex === images.length - 1) {
+        putImg(0);
+        currentIndex = 0;
+    } else {
+        putImg(currentIndex+1);
+        currentIndex += 1
+    }
 }
 
 // кнопка назад
 let prevImg = () => {
-
+    if (currentIndex === 0) {
+        putImg(images.length - 1);
+        currentIndex = images.length - 1
+    } else {
+        putImg(currentIndex-1);
+        currentIndex -= 1
+    }
 }
 
 
 // вставка первой картинки в область просмотра
-let putFirstImg = () => {
-    const firstImg = document.querySelector('.footimg')
-
-    container.innerHTML = `${firstImg.outerHTML}`
+let putImg = (index) => {
+    container.innerHTML = `<img src="assets/${images[index]}" alt="picture">`
 }
 
 // заполнение галерии снизу картинками
@@ -38,6 +50,14 @@ let openGallery = images => {
 // загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
     openGallery(images);
-    putFirstImg();
+    putImg(currentIndex);
+})
+
+next.addEventListener('click', () => {
+    nextImg();
+})
+
+prev.addEventListener('click', () => {
+    prevImg();
 })
 
