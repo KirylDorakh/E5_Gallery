@@ -4,13 +4,19 @@
     box-sizing: border-box;
 }
 
-body{
-    display: grid;
-    grid-template-rows: 80% 20%;
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
 }
 
 .main{
     display: flex;
+    flex: 1;
     align-items: center;
 }
 
@@ -43,17 +49,21 @@ body{
 }
 
 .img{
-    height: 500px;
+    height: 70vh;
     width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px 0;
+    position: relative;
 }
 
 .img img{
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
+    height: auto;
+    display: block;
 }
 
 .gallery{
@@ -73,4 +83,9 @@ body{
 .gallery .footimg img{
     height: 100%;
     width: auto;
+}
+
+.gallery .footimg.active {
+    outline: 3px solid red;
+    outline-offset: -3px;
 }

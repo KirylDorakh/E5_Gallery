@@ -1,63 +1,98 @@
-// <img src="images/dzen.png" alt="Письма мастера дзен" width="400"
-//      height="341">>
-images = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg']
+const images = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg'];
 
-const footer = document.querySelector('.gallery')
-const next = document.querySelector('.next')
-const prev = document.querySelector('.prev')
-const container = document.querySelector('.img')
+// DOM elements
+const footer = document.querySelector('.gallery');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+const container = document.querySelector('.img');
 
-let currentIndex = 0
+// Index of the currently displayed image
+let currentIndex = 0;
 
-// кнопка вперед
+
+// Displays an image by index and updates the active thumbnail.
+let putImg = (index) => {
+    currentIndex = index;
+
+    // Render the selected image in the main view
+    container.innerHTML = `
+    <img 
+        src="assets/${images[currentIndex]}" 
+        alt="picture ${currentIndex + 1}"
+        loading="eager"
+        decoding="async"
+    >
+  `;
+
+    // Highlight the active thumbnail
+    const thumbs = footer.querySelectorAll('.footimg');
+    thumbs.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === currentIndex);
+    });
+};
+
+
+// Shows the next image.
 let nextImg = () => {
     if (currentIndex === images.length - 1) {
         putImg(0);
-        currentIndex = 0;
     } else {
-        putImg(currentIndex+1);
-        currentIndex += 1
+        putImg(currentIndex + 1);
     }
-}
+};
 
-// кнопка назад
+// Shows the previous image.
 let prevImg = () => {
     if (currentIndex === 0) {
         putImg(images.length - 1);
-        currentIndex = images.length - 1
     } else {
-        putImg(currentIndex-1);
-        currentIndex -= 1
+        putImg(currentIndex - 1);
     }
-}
+};
 
+// Generates thumbnail images below the main viewer.
+let openGallery = (list) => {
+    list.forEach((image, index) => {
+        const figure = document.createElement('figure');
+        figure.classList.add('footimg');
+        figure.dataset.index = String(index);
 
-// вставка первой картинки в область просмотра
-let putImg = (index) => {
-    container.innerHTML = `<img src="assets/${images[index]}" alt="picture">`
-}
+        figure.innerHTML = `
+      <img 
+          src="assets/${image}" 
+          alt="thumbnail ${index + 1}"
+          loading="lazy"
+          decoding="async"
+      >
+    `;
 
-// заполнение галерии снизу картинками
-let openGallery = images => {
-    images.forEach(image => {
-        let figure = document.createElement('figure')
-        figure.classList.add('footimg')
-        figure.innerHTML = `<img src="assets/${image}" alt="picture">`
-        footer.insertAdjacentElement('beforeend', figure)
-    })
-}
+        footer.appendChild(figure);
+    });
+};
 
-// загрузка страницы
+// Initializes the gallery when the page is fully loaded:
 document.addEventListener('DOMContentLoaded', () => {
     openGallery(images);
     putImg(currentIndex);
-})
+});
 
-next.addEventListener('click', () => {
-    nextImg();
-})
+// Navigation buttons
+nextBtn.addEventListener('click', nextImg);
+prevBtn.addEventListener('click', prevImg);
 
-prev.addEventListener('click', () => {
-    prevImg();
-})
+// Keyboard navigation support.
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextImg();
+    if (e.key === 'ArrowLeft') prevImg();
+});
 
+// Thumbnail click handling using event delegation.
+footer.addEventListener('click', (e) => {
+    const thumb = e.target.closest('.footimg');
+    if (!thumb) return;
+
+    const index = Number(thumb.dataset.index);
+    if (Number.isNaN(index)) return;
+
+    putImg(index);
+});
