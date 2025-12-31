@@ -16,7 +16,7 @@ A lightweight, responsive image gallery built with vanilla HTML, CSS, and JavaSc
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/KirylDorakh/E5_Gallery.git
+   git clone https://github.com/KirylDorakh/Simply_gallery.git
    ```
 
 2. 	Open index.html in your browser
